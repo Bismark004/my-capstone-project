@@ -1,8 +1,8 @@
-
-const App = () => {
+import HomePage from './components/pages/Homepage';
+const  App = () => {
     return (
         <div>
-            <p>Hi</p>
+            <HomePage/>
 
         </div>
     )

@@ -1,13 +1,15 @@
 import Logo from './Logo';
-import WatchLater from './WatchLaterIcon';
 import FavouriteIcon from './FavouriteIcon';
+import WatchLater from './WatchLaterIcon';
+
 const Header = () => {
     return (
-        <div className=" bg-blue-900 flex h-20">
-           <Logo/>
-           <WatchLater/>
-           <FavouriteIcon/>
-       </div>
+        <div className="w-full bg-blue-900 flex h-20">
+            <Logo/>
+            <FavouriteIcon/>
+            <WatchLater/>
+            
+        </div>
     )
 }
 export default Header;
