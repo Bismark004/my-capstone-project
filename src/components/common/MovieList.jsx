@@ -1,6 +1,5 @@
-import React from 'react';
-import { useMoviesStore } from './store'; // Assuming you're using Zustand for state management
-import MovieCard from './MovieCard'; // A separate reusable component for each movie item
+import { useMoviesStore } from "./store";
+import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, category, type }) => {
   const movies = useMoviesStore((state) => state.movies[category][type]);
