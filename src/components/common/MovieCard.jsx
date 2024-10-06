@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"; // To navigate to the movie details page
-import apiConfig from "../api/apiConfig"; // To get image URLs
+import { Link } from "react-router-dom";
+import apiConfig from "../../Api/apiConfig";
 
 const MovieCard = ({ movie }) => {
   const posterUrl = apiConfig.w500Image(movie.poster_path);

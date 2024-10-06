@@ -1,11 +1,14 @@
-import HomePage from './components/pages/Homepage';
-const  App = () => {
-    return (
-        <div>
-            <HomePage/>
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./components/pages/Homepage";
 
-        </div>
-    )
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
+};
 
-}
 export default App;
