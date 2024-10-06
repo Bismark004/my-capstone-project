@@ -1,21 +1,22 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useEffect } from "react";
 import "swiper/css";
+import useMovieStore from "../stores/useMovieStore";
 import MovieCard from "./MovieCard";
-import useMovieStore from "../stores/useMovieStores";
-const MovieList = () => {
-  const { popularMovies, fetchPopularMovies, loading } = useMovieStore();
+
+const MovieList = ({ category, type }) => {
+  const movies = useMovieStore((state) => state.movies[category] || []);
+  const fetchMovies = useMovieStore((state) => state.fetchMovies);
 
   useEffect(() => {
-    fetchPopularMovies();
-  }, [fetchPopularMovies]);
-
-  if (loading) return <div>Loading...</div>;
+    fetchMovies(category, type);
+  }, [category, type, fetchMovies]);
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Popular Movies</h2>
-      <Swiper spaceBetween={20} slidesPerView={3} navigation>
-        {popularMovies.map((movie) => (
+    <div className="movie-list my-6">
+      <h2 className="text-2xl font-semibold mb-4">{type} Movies</h2>
+      <Swiper spaceBetween={20} slidesPerView={4} grabCursor={true}>
+        {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
             <MovieCard movie={movie} />
           </SwiperSlide>

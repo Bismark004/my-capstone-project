@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import apiConfig from "../../Api/apiConfig";
+import apiConfig from "../Api/apiConfig";
 
 const MovieCard = ({ movie }) => {
   const posterUrl = apiConfig.w500Image(movie.poster_path);
