@@ -1,20 +1,44 @@
+
 import { create } from 'zustand';
-import tmdbApi from '../../Api/tmdbApi';
+import tmdbApi from '../Api/tmdbApi';
 
-const useMoviesStore = create((set) => ({
-    popularMovies: [],
-    loading: false,
+const useMovieStore = create((set) => ({
+  movies: {},
+  loading: false,
 
-    fetchPopularMovies: async (page = 1) => {
-        set({ loading: true });
-        try {
-            const response = await tmdbApi.getPopularMovies(page);
-            set({ popularMovies: response.results, loading: false });
-        } catch (error) {
-            console.error('Error fetching popular movies:', error);
-            set({ loading: false });
-        }
-    },
+  fetchMovies: async (category, type) => {
+    set({ loading: true });
+    try {
+      const response = await tmdbApi.getMoviesList(type);
+      set((state) => ({
+        movies: {
+          ...state.movies,
+          [category]: response.data.results,
+        },
+        loading: false,
+      }));
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+      set({ loading: false });
+    }
+  },
+
+  fetchTvShows: async (category, type) => {
+    set({ loading: true });
+    try {
+      const response = await tmdbApi.getTvList(type);
+      set((state) => ({
+        movies: {
+          ...state.movies,
+          [category]: response.data.results,
+        },
+        loading: false,
+      }));
+    } catch (error) {
+      console.error('Error fetching TV shows:', error);
+      set({ loading: false });
+    }
+  },
 }));
 
-export default useMoviesStore;
+export default useMovieStore;
