@@ -1,6 +1,6 @@
 
 import { create } from 'zustand';
-import tmdbApi from '../Api/tmdbApi';
+import tmdbApi from '../../Api/tmdbApi';
 
 const useMovieStore = create((set) => ({
   movies: {},

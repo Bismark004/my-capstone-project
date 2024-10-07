@@ -1,21 +1,25 @@
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useEffect } from "react";
 import "swiper/css";
-import useMovieStore from "../stores/useMovieStore";
 import MovieCard from "./MovieCard";
+import tmdbApi from "../../Api/tmdbApi";
 
-const MovieList = ({ category, type }) => {
-  const movies = useMovieStore((state) => state.movies[category] || []);
-  const fetchMovies = useMovieStore((state) => state.fetchMovies);
+const MovieList = ({ title, type, category }) => {
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetchMovies(category, type);
-  }, [category, type, fetchMovies]);
+    const fetchMovies = async () => {
+      const params = {};
+      const response = await tmdbApi.getMovieList(type, { params });
+      setMovies(response.results);
+    };
+    fetchMovies();
+  }, [type]);
 
   return (
-    <div className="movie-list my-6">
-      <h2 className="text-2xl font-semibold mb-4">{type} Movies</h2>
-      <Swiper spaceBetween={20} slidesPerView={4} grabCursor={true}>
+    <div className="movie-list">
+      <h2 className="text-xl font-bold mb-4">{title}</h2>
+      <Swiper spaceBetween={10} slidesPerView={"auto"}>
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
             <MovieCard movie={movie} />
