@@ -7,7 +7,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <Link to={`/movie/${movie.id}`}>
-      <div className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+      <div className="bg-scarlet  rounded-lg hover:bg-claucous transition-colors duration-300">
         <div className="mt-2 text-center">
           <img
             src={posterUrl}
@@ -17,7 +17,7 @@ const MovieCard = ({ movie }) => {
           <h3 className="text-lg font-semibold text-white">
             {movie.title || movie.name}
           </h3>
-          <p className="text-sm text-gray-400 mt-3">Rating: {rating}</p>
+          <p className="text-claucous mt-3">Rating: {rating}</p>
         </div>
       </div>
     </Link>

@@ -7,6 +7,12 @@ module.exports = {
     colors: {
       'light-blue': colors.lightBlue,
       cyan: colors.cyan,
+      customDark: '#0D0106',
+      zeffre: '#3626A7',
+      claucous: '#657ED4',
+      scarlet: '#FF331F',  
+      ghatWhite: '#FBFBFF'
+
     },
     width: {
       120: '120%',

@@ -33,8 +33,10 @@ const MovieList = ({ title, type, category }) => {
   }
 
   return (
-    <div className="movie-list">
-      <h2 className="text-xl font-bold mb-4">{title || `${category} List`}</h2>
+    <div>
+      <h2 className="text-xl font-bold mb-4 text-zeffre">
+        {title || `${category} List`}
+      </h2>
       {movies.length === 0 ? (
         <div>Loading...</div>
       ) : (
