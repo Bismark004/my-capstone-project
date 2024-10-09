@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import tmdbApi from "../../Api/tmdbApi";
 import { useParams } from "react-router-dom";
 import apiConfig from "../../Api/apiConfig";
-import { SwiperSlide } from "swiper/react";
+import { SwiperSlide, Swiper } from "swiper/react";
 import MovieCard from "../common/MovieCard";
 
 const MovieDetails = () => {
@@ -19,9 +19,16 @@ const MovieDetails = () => {
         const category = window.location.pathname.startsWith("/movie")
           ? "movie"
           : "tv";
-        const response = await tmdbApi.details(category, id);
+
+        // Fetch movie details
+        const movieResponse = await tmdbApi.details(category, id);
+        if (isMounted) setMovieDetails(movieResponse);
+
+        // Fetch cast
+        const castResponse = await tmdbApi.getVideos(category, id);
         if (isMounted) setCasts(castResponse.cast);
 
+        // Fetch similar movies
         const similarMoviesResponse = await tmdbApi.similar(category, id);
         if (isMounted) setSimilarMovies(similarMoviesResponse.results || []);
       } catch (error) {
@@ -42,10 +49,14 @@ const MovieDetails = () => {
   if (!movieDetails) {
     return <div>Loading</div>;
   }
-  let posterUrl = apiConfig.w500image(movie.poster_path || movie.backdrop_path);
+
+  let posterUrl = apiConfig.w500image(
+    movieDetails.poster_path || movieDetails.backdrop_path
+  );
   let backdropUrl = apiConfig.w500image(
     movieDetails.backdrop_path || movieDetails.poster_path
   );
+
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Movie Header */}
