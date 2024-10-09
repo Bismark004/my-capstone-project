@@ -10,11 +10,12 @@ const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [casts, setCasts] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
-    const fecthMovieDetails = async () => {
+    const fetchMovieData = async () => {
       try {
         const category = window.location.pathname.startsWith("/movie")
           ? "movie"
@@ -22,39 +23,46 @@ const MovieDetails = () => {
 
         // Fetch movie details
         const movieResponse = await tmdbApi.details(category, id);
-        if (isMounted) setMovieDetails(movieResponse);
+        if (isMounted) {
+          setMovieDetails(movieResponse);
+        }
 
         // Fetch cast
         const castResponse = await tmdbApi.getVideos(category, id);
-        if (isMounted) setCasts(castResponse.cast);
+        if (isMounted && castResponse.cast) {
+          setCasts(castResponse.cast);
+        }
 
         // Fetch similar movies
         const similarMoviesResponse = await tmdbApi.similar(category, id);
-        if (isMounted) setSimilarMovies(similarMoviesResponse.results || []);
+        if (isMounted && similarMoviesResponse.results) {
+          setSimilarMovies(similarMoviesResponse.results);
+        }
+
+        setLoading(false);
       } catch (error) {
-        console.error(
-          `Error while fetching ${category} details, cast, or similar movies:`,
-          error
-        );
+        console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
-    fecthMovieDetails();
+    fetchMovieData();
 
     return () => {
       isMounted = false;
     };
   }, [id]);
 
-  if (!movieDetails) {
-    return <div>Loading</div>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  let posterUrl = apiConfig.w500image(
+  if (!movieDetails) {
+    return <div>Movie details not found</div>;
+  }
+
+  const posterUrl = apiConfig.w500image(
     movieDetails.poster_path || movieDetails.backdrop_path
-  );
-  let backdropUrl = apiConfig.w500image(
-    movieDetails.backdrop_path || movieDetails.poster_path
   );
 
   return (
@@ -128,4 +136,5 @@ const MovieDetails = () => {
     </div>
   );
 };
+
 export default MovieDetails;
