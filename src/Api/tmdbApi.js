@@ -64,7 +64,7 @@ const tmdbApi = {
 
     details: (cate, id, params) => {
         const url = `${category[cate]}/${id}`;
-        return axiosClient.get(url, { params });
+        return axiosClient.get(url, { params: {...params} });
     },
 
     similar: (cate, id) => {
