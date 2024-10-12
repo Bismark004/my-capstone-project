@@ -83,7 +83,7 @@ const MovieDetails = () => {
   };
 
   return (
-    <div className=" mx-auto">
+    <div className=" mx-auto w-full max-w-screen-xl">
       {/* Banner Section */}
       <div
         className="relative h-80 bg-cover bg-center w-full"
@@ -95,10 +95,10 @@ const MovieDetails = () => {
       </div>
 
       {/* Movie Content */}
-      <div className="relative flex flex-col md:flex-row items-start gap-6 -mt-32 max-w-[1260px] mx-auto px-8">
+      <div className="relative flex flex-col md:flex-row items-start gap-6 -mt-32 max-w-[1200px] mx-auto px-8 h-auto">
         {/* Poster */}
         <img
-          className="flex-1 hidden md:block rounded-xl h-98 bg-cover bg-center"
+          className="flex-1 hidden md:block rounded-xl  bg-cover bg-center"
           src={posterUrl}
           alt={movieDetails.title || "Movie poster"}
           loading="lazy"
@@ -112,10 +112,10 @@ const MovieDetails = () => {
           <p className="text-customDark mt-20">{movieDetails.overview}</p>
 
           <div className="flex gap-4 mt-4">
-            <span className="bg-black text-white px-3 py-1 rounded">
+            <span className="bg-zeffre text-white px-3 py-1 rounded">
               Rating: {movieDetails.vote_average.toFixed(1)}
             </span>
-            <span className="bg-gray-700 text-white px-3 py-1 rounded">
+            <span className="bg-claucous text-white px-3 py-1 rounded">
               Release Date:{" "}
               {movieDetails.release_date || movieDetails.first_air_date}
             </span>
@@ -126,7 +126,7 @@ const MovieDetails = () => {
             {movieDetails.genres?.map((genre) => (
               <span
                 key={genre.id}
-                className="px-2 py-1 border-1 border-customDark rounded text-sm font-semibold">
+                className="px-2 py-1 border-2 border-scarlet rounded-full text-sm font-semibold">
                 {genre.name}
               </span>
             ))}
@@ -135,7 +135,7 @@ const MovieDetails = () => {
           <div className="flex gap-4">
             <button
               className={`flex items-center gap-2 px-4 py-2 rounded ${
-                isFavourite ? "bg-red-500" : "bg-gray-500"
+                isFavourite ? "bg-scarlet" : "bg-claucous"
               }`}
               onClick={toggleFavorite}>
               <FavouriteIcon />
@@ -144,7 +144,7 @@ const MovieDetails = () => {
 
             <button
               className={`flex items-center gap-2 px-4 py-2 rounded ${
-                isWatchLater ? "bg-blue-500" : "bg-gray-500"
+                isWatchLater ? "bg-scarlet" : "bg-claucous"
               }`}
               onClick={toggleWatchLater}>
               <WatchLaterIcon />
@@ -159,11 +159,11 @@ const MovieDetails = () => {
         <h2 className="text-2xl font-semibold text-customDark text-center">
           Cast
         </h2>
-        <div className="grid grid-cols-5 gap-4 mt-4">
+        <div className="flex  gap-4 mt-4 overflow-x-scroll">
           {casts.slice(0, 10).map((member) => (
             <div key={member.id} className="flex flex-col items-center">
               <img
-                className="w-24 h-24 rounded-full object-cover"
+                className="rounded-full  aspect-square object-cover"
                 src={apiConfig.w500image(member.profile_path)}
                 alt={member.name}
                 loading="lazy"
