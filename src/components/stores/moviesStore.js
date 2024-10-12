@@ -5,23 +5,23 @@ const setLocalStorage = (key, value) =>
   localStorage.setItem(key, JSON.stringify(value));
 
 const useMovieStore = create((set) => ({
-  favorites: getLocalStorage("favorites"),
+  favourites: getLocalStorage("favourites"),
   watchLater: getLocalStorage("watchLater"),
 
-  addFavorite: (movie) =>
+  addFavourite: (movie) =>
     set((state) => {
-      const updatedFavorites = [...state.favorites, movie];
-      setLocalStorage("favorites", updatedFavorites);
-      return { favorites: updatedFavorites };
+      const updatedFavourites = [...state.favourites, movie];
+      setLocalStorage("favourites", updatedFavourites);
+      return { favourites: updatedFavourites };
     }),
 
-  removeFavorite: (id) =>
+  removeFavourite: (id) =>
     set((state) => {
-      const updatedFavorites = state.favorites.filter(
+      const updatedFavourites = state.favourites.filter(
         (movie) => movie.id !== id
       );
-      setLocalStorage("favorites", updatedFavorites);
-      return { favorites: updatedFavorites };
+      setLocalStorage("favourites", updatedFavourites);
+      return { favourites: updatedFavourites };
     }),
 
   addWatchLater: (movie) =>

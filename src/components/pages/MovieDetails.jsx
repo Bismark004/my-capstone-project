@@ -17,11 +17,11 @@ const MovieDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const {
-    addFavorite,
-    removeFavorite,
+    addFavourite,
+    removeFavourite,
     addWatchLater,
     removeWatchLater,
-    favorites,
+    favourites,
     watchLater,
   } = useMovieStore();
 
@@ -69,11 +69,11 @@ const MovieDetails = () => {
   );
   const backdropUrl = apiConfig.w500image(movieDetails.backdrop_path);
 
-  const isFavorite = favorites.some((movie) => movie.id === movieDetails.id);
+  const isFavourite = favourites.some((movie) => movie.id === movieDetails.id);
   const isWatchLater = watchLater.some((movie) => movie.id === movieDetails.id);
 
   const toggleFavorite = () => {
-    isFavorite ? removeFavorite(movieDetails.id) : addFavorite(movieDetails);
+    isFavourite ? removeFavourite(movieDetails.id) : addFavourite(movieDetails);
   };
 
   const toggleWatchLater = () => {
@@ -135,11 +135,11 @@ const MovieDetails = () => {
           <div className="flex gap-4">
             <button
               className={`flex items-center gap-2 px-4 py-2 rounded ${
-                isFavorite ? "bg-red-500" : "bg-gray-500"
+                isFavourite ? "bg-red-500" : "bg-gray-500"
               }`}
               onClick={toggleFavorite}>
               <FavouriteIcon />
-              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+              {isFavourite ? "Remove from Favourites" : "Add to Favourites"}
             </button>
 
             <button
