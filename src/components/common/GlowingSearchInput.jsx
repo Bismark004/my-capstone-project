@@ -7,9 +7,9 @@ const GlowingSearchInput = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (query.trim()) {
-      navigate(`/search?query=${query}`);
-      setQuery(""); // Clear input field after search
+    const query = e.target.searchInput.value;
+    const category = e.target.categorySelect.value;
+    navigate(`/search?query=${query}&category=${category}`);
     }
   };
 
@@ -27,6 +27,11 @@ const GlowingSearchInput = () => {
             onChange={(e) => setQuery(e.target.value)}
             className="rounded-full flex-1 px-6 py-4 text-gray-700 focus:outline-none"
           />
+          <select name="categorySelect">
+           <option value="multi">All</option>
+           <option value="movie">Movies</option>
+           <option value="tv">TV Shows</option>
+          </select>
           <button
             type="submit"
             className="bg-indigo-500 text-white rounded-full font-semibold px-8 py-4 hover:bg-indigo-400 focus:bg-indigo-600 focus:outline-none">

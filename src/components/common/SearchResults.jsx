@@ -7,16 +7,16 @@ const SearchResults = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const query = queryParams.get("query");
+  const category = queryParams.get("category") || "multi"; // Default to "multi" for movies & TV shows
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const data = await tmdbApi.search("movie", { query, page });
+        const data = await tmdbApi.search(category, { query, page });
         setResults(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -25,12 +25,12 @@ const SearchResults = () => {
     };
 
     if (query) fetchSearchResults();
-  }, [query, page]);
+  }, [query, category, page]);
 
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       setPage(newPage);
-      navigate(`/search?query=${query}&page=${newPage}`);
+      navigate(`/search?query=${query}&category=${category}&page=${newPage}`);
     }
   };
 
@@ -40,8 +40,12 @@ const SearchResults = () => {
         Search Results for: "{query}"
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {results.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+        {results.map((item) => (
+          <MovieCard
+            key={item.id}
+            movie={item}
+            category={item.media_type} // Handle media type dynamically
+          />
         ))}
       </div>
 
