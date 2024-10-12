@@ -10,7 +10,6 @@ const GlowingSearchInput = () => {
     const query = e.target.searchInput.value;
     const category = e.target.categorySelect.value;
     navigate(`/search?query=${query}&category=${category}`);
-    }
   };
 
   return (
@@ -28,9 +27,9 @@ const GlowingSearchInput = () => {
             className="rounded-full flex-1 px-6 py-4 text-gray-700 focus:outline-none"
           />
           <select name="categorySelect">
-           <option value="multi">All</option>
-           <option value="movie">Movies</option>
-           <option value="tv">TV Shows</option>
+            <option value="multi">All</option>
+            <option value="movie">Movies</option>
+            <option value="tv">TV Shows</option>
           </select>
           <button
             type="submit"
