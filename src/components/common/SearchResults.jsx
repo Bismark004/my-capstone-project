@@ -6,8 +6,8 @@ import MovieCard from "../common/MovieCard";
 const SearchResults = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const query = queryParams.get("query");
-  const category = queryParams.get("category") || "multi"; // Default to "multi" for movies & TV shows
+  const query = queryParams.get("query") || "";
+  const category = queryParams.get("category") || "multi";
   const [results, setResults] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -16,9 +16,12 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const data = await tmdbApi.search(category, { query, page });
-        setResults(data.results);
-        setTotalPages(data.total_pages);
+        const { results, total_pages } = await tmdbApi.search(category, {
+          query,
+          page,
+        });
+        setResults(results);
+        setTotalPages(total_pages);
       } catch (error) {
         console.error("Error fetching search results:", error);
       }
@@ -41,11 +44,7 @@ const SearchResults = () => {
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {results.map((item) => (
-          <MovieCard
-            key={item.id}
-            movie={item}
-            category={item.media_type} // Handle media type dynamically
-          />
+          <MovieCard key={item.id} movie={item} category={item.media_type} />
         ))}
       </div>
 

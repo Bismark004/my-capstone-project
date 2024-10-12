@@ -3,44 +3,42 @@ import { useNavigate } from "react-router-dom";
 
 const GlowingSearchInput = () => {
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("multi"); // Default category
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const query = e.target.searchInput.value;
-    const category = e.target.categorySelect.value;
+    if (!query) return; // Avoid searching with an empty query
     navigate(`/search?query=${query}&category=${category}`);
   };
 
   return (
     <div className="relative p-12 w-full sm:max-w-2xl sm:mx-auto">
-      <div className="overflow-hidden z-0 rounded-full relative p-3">
+      <div className="overflow-hidden rounded-full p-3">
         <form
-          role="form"
           onSubmit={handleSearch}
-          className="relative flex z-50 bg-white rounded-full">
+          className="relative flex bg-white rounded-full">
           <input
             type="text"
             placeholder="What do you want to watch?"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="rounded-full flex-1 px-6 py-4 text-gray-700 focus:outline-none"
+            className="flex-1 px-6 py-4 rounded-full focus:outline-none"
           />
-          <select name="categorySelect">
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="mx-2 px-4 rounded-md">
             <option value="multi">All</option>
             <option value="movie">Movies</option>
             <option value="tv">TV Shows</option>
           </select>
           <button
             type="submit"
-            className="bg-indigo-500 text-white rounded-full font-semibold px-8 py-4 hover:bg-indigo-400 focus:bg-indigo-600 focus:outline-none">
+            className="px-8 py-4 bg-indigo-500 text-white rounded-full hover:bg-indigo-400">
             Search
           </button>
         </form>
-        <div className="glow glow-1 z-10 animate-glow1 bg-pink-400 rounded-full w-120 h-120 -top-10 -left-10 absolute"></div>
-        <div className="glow glow-2 z-20 animate-glow2 bg-purple-400 rounded-full w-120 h-120 -top-10 -left-10 absolute"></div>
-        <div className="glow glow-3 z-30 animate-glow3 bg-yellow-400 rounded-full w-120 h-120 -top-10 -left-10 absolute"></div>
-        <div className="glow glow-4 z-40 animate-glow4 bg-blue-400 rounded-full w-120 h-120 -top-10 -left-10 absolute"></div>
       </div>
     </div>
   );
