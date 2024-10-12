@@ -116,6 +116,20 @@ const MovieDetails = () => {
           ))}
         </div>
       </div>
+
+      {/* Similar Movies Section */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-semibold text-customDark mb-4">
+          Similar Movies
+        </h2>
+        <Swiper spaceBetween={5} slidesPerView={"4"} grabCursor={true}>
+          {similarMovies.map((similarMovie) => (
+            <SwiperSlide key={similarMovie.id}>
+              <MovieCard movie={similarMovie} category={category} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 };
