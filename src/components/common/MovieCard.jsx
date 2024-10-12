@@ -14,10 +14,12 @@ const MovieCard = ({ movie }) => {
             alt={movie.title || movie.name}
             className="w-full h-72 object-cover rounded-md"
           />
-          <h3 className="text-lg font-semibold text-white">
+          <h3 className="text-lg font-semibold text-ghatWhite">
             {movie.title || movie.name}
           </h3>
-          <p className="text-claucous mt-3">Rating: {rating}</p>
+          <span className="text-white w-12 flex justify-center rounded-full border-2 border-white border-double bg-black mt-3">
+            {rating}
+          </span>
         </div>
       </div>
     </Link>
