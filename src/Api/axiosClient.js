@@ -33,8 +33,8 @@ axiosClient.interceptors.response.use(
         return response;
     },
     (error) => {
-        console.error('Response error:', error);
-        return Promise.reject(error);
+        console.error('API Error:', error.response ? error.response.data : error.message);
+        throw error;
     }
 );
 

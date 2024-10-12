@@ -17,28 +17,22 @@ const MovieDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Starting to fetch data for movie ID:", id);
         setIsLoading(true);
         setError(null);
         const categoryType = window.location.pathname.includes("/movie")
           ? "movie"
           : "tv";
         setCategory(categoryType);
-        console.log("Category type:", categoryType);
 
-        console.log("Fetching movie details...");
         const details = await tmdbApi.details(categoryType, id);
-        console.log("Movie details fetched:", details);
         setMovieDetails(details);
 
-        console.log("Fetching similar movies...");
-        const similar = await tmdbApi.similar(categoryType, id);
-        console.log("Similar movies fetched:", similar);
-        setSimilarMovies(similar.results);
+        const [similar, credits] = await Promise.all([
+          tmdbApi.similar(categoryType, id),
+          tmdbApi.getCredits(categoryType, id),
+        ]);
 
-        console.log("Fetching credits...");
-        const credits = await tmdbApi.getCredits(categoryType, id);
-        console.log("Credits fetched:", credits);
+        setSimilarMovies(similar.results);
         setCasts(credits.cast);
 
         setIsLoading(false);
@@ -53,7 +47,7 @@ const MovieDetails = () => {
   }, [id]);
 
   if (isLoading) {
-    return <div>Loading movie details...</div>; // Consider using a loading spinner here
+    return <div>Loading movie details...</div>; // Add spinner here
   }
 
   if (error) {
@@ -63,20 +57,19 @@ const MovieDetails = () => {
   const posterUrl = apiConfig.w500image(
     movieDetails.poster_path || movieDetails.backdrop_path
   );
-
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* Movie Header */}
-      <div className="flex flex-col md:flex-row items-start gap-8">
+      {/*header*/}
+      <div className="flex flex-col md:flex-row items-start gap-6">
         <img
           className="w-full md:w-1/3 rounded-lg"
           src={posterUrl}
-          alt={movieDetails.title || movieDetails.name}
+          alt={movieDetails.title || movieDetails.name || "Movie poster"}
           loading="lazy"
         />
         <div className="flex flex-col gap-4">
           <h1 className="text-4xl font-bold text-customDark">
-            {movieDetails.title || movieDetails.name}
+            {movieDetails.title}
           </h1>
           <p className="text-gray-700">{movieDetails.overview}</p>
 
@@ -90,7 +83,7 @@ const MovieDetails = () => {
             </span>
           </div>
 
-          {/* Genres */}
+          {/*Genres*/}
           <div className="flex flex-wrap gap-2 mt-4">
             {movieDetails.genres?.map((genre) => (
               <span
@@ -102,43 +95,7 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
-
-      {/* Cast Section */}
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold text-customDark">Cast</h2>
-        <div className="flex flex-wrap gap-4 mt-4">
-          {casts.slice(0, 10).map((member) => (
-            <div key={member.id} className="flex flex-col items-center">
-              <img
-                className="w-24 h-24 rounded-full object-cover"
-                src={apiConfig.w500image(member.profile_path)}
-                alt={member.name}
-                loading="lazy"
-                onError={(e) => {
-                  e.target.src = "path/to/fallback/image.jpg";
-                }}
-              />
-              <p className="text-center text-gray-700 mt-2">{member.name}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Similar Movies Section */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-customDark mb-4">
-          Similar Movies
-        </h2>
-        <Swiper spaceBetween={10} slidesPerView={"auto"} grabCursor={true}>
-          {similarMovies.map((similarMovie) => (
-            <SwiperSlide key={similarMovie.id}>
-              <MovieCard item={similarMovie} category={category} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
     </div>
   );
 };
-
 export default MovieDetails;
