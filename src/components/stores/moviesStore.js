@@ -1,45 +1,28 @@
 
 import { create } from 'zustand';
 
-const getLocalStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
-const setLocalStorage = (key, value) =>
-  localStorage.setItem(key, JSON.stringify(value));
-
 const useMovieStore = create((set) => ({
-  favorites: getLocalStorage("favorites"),
-  watchLater: getLocalStorage("watchLater"),
-
+  favorites: [],
+  watchLater: [],
+  
   addFavorite: (movie) =>
-    set((state) => {
-      const updatedFavorites = [...state.favorites, movie];
-      setLocalStorage("favorites", updatedFavorites);
-      return { favorites: updatedFavorites };
-    }),
+    set((state) => ({
+      favorites: [...state.favorites, movie],
+    })),
 
   removeFavorite: (id) =>
-    set((state) => {
-      const updatedFavorites = state.favorites.filter(
-        (movie) => movie.id !== id
-      );
-      setLocalStorage("favorites", updatedFavorites);
-      return { favorites: updatedFavorites };
-    }),
+    set((state) => ({
+      favorites: state.favorites.filter((movie) => movie.id !== id),
+    })),
 
   addWatchLater: (movie) =>
-    set((state) => {
-      const updatedWatchLater = [...state.watchLater, movie];
-      setLocalStorage("watchLater", updatedWatchLater);
-      return { watchLater: updatedWatchLater };
-    }),
+    set((state) => ({
+      watchLater: [...state.watchLater, movie],
+    })),
 
   removeWatchLater: (id) =>
-    set((state) => {
-      const updatedWatchLater = state.watchLater.filter(
-        (movie) => movie.id !== id
-      );
-      setLocalStorage("watchLater", updatedWatchLater);
-      return { watchLater: updatedWatchLater };
-    }),
+    set((state) => ({
+      watchLater: state.watchLater.filter((movie) => movie.id !== id),
+    })),
 }));
-
 export default useMovieStore;

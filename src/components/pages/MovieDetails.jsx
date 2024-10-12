@@ -9,6 +9,13 @@ import WatchLaterIcon from "../common/WatchLaterIcon";
 import FavouriteIcon from "../common/FavouriteIcon";
 
 const MovieDetails = () => {
+  const { id } = useParams();
+  const [movieDetails, setMovieDetails] = useState(null);
+  const [casts, setCasts] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [category, setCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const {
     addFavorite,
     removeFavorite,
@@ -17,27 +24,6 @@ const MovieDetails = () => {
     favorites,
     watchLater,
   } = useMovieStore();
-
-  const isFavorite = favorites.some((movie) => movie.id === movieDetails.id);
-  const isWatchLater = watchLater.some((movie) => movie.id === movieDetails.id);
-
-  const toggleFavorite = () => {
-    isFavorite ? removeFavorite(movieDetails.id) : addFavorite(movieDetails);
-  };
-
-  const toggleWatchLater = () => {
-    isWatchLater
-      ? removeWatchLater(movieDetails.id)
-      : addWatchLater(movieDetails);
-  };
-
-  const { id } = useParams();
-  const [movieDetails, setMovieDetails] = useState(null);
-  const [casts, setCasts] = useState([]);
-  const [similarMovies, setSimilarMovies] = useState([]);
-  const [category, setCategory] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,6 +69,19 @@ const MovieDetails = () => {
   );
   const backdropUrl = apiConfig.w500image(movieDetails.backdrop_path);
 
+  const isFavorite = favorites.some((movie) => movie.id === movieDetails.id);
+  const isWatchLater = watchLater.some((movie) => movie.id === movieDetails.id);
+
+  const toggleFavorite = () => {
+    isFavorite ? removeFavorite(movieDetails.id) : addFavorite(movieDetails);
+  };
+
+  const toggleWatchLater = () => {
+    isWatchLater
+      ? removeWatchLater(movieDetails.id)
+      : addWatchLater(movieDetails);
+  };
+
   return (
     <div className=" mx-auto">
       {/* Banner Section */}
@@ -99,7 +98,7 @@ const MovieDetails = () => {
       <div className="relative flex flex-col md:flex-row items-start gap-6 -mt-32 max-w-[1260px] mx-auto px-8">
         {/* Poster */}
         <img
-          className="flex-1 hidden md:block rounded-xl h-86 bg-cover bg-center"
+          className="flex-1 hidden md:block rounded-xl h-98 bg-cover bg-center"
           src={posterUrl}
           alt={movieDetails.title || "Movie poster"}
           loading="lazy"
@@ -127,7 +126,7 @@ const MovieDetails = () => {
             {movieDetails.genres?.map((genre) => (
               <span
                 key={genre.id}
-                className="px-2 py-1 border-2 border-black rounded text-sm font-semibold">
+                className="px-2 py-1 border-1 border-customDark rounded text-sm font-semibold">
                 {genre.name}
               </span>
             ))}
