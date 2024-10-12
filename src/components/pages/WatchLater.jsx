@@ -1,4 +1,4 @@
-import useMovieStore from "../store/movieStore";
+import useMovieStore from "../stores/moviesStore";
 import MovieCard from "../common/MovieCard";
 
 const WatchLaterPage = () => {

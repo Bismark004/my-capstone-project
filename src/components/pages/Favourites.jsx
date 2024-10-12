@@ -1,7 +1,7 @@
-import useMovieStore from "../store/movieStore";
+import useMovieStore from "../stores/moviesStore";
 import MovieCard from "../common/MovieCard";
 
-const Favorites = () => {
+const Favourites = () => {
   const { favorites } = useMovieStore();
 
   if (favorites.length === 0) return <p>No favorite movies yet!</p>;
@@ -18,4 +18,4 @@ const Favorites = () => {
   );
 };
 
-export default Favorites;
+export default Favourites;
