@@ -95,6 +95,27 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Cast Section */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold text-customDark">Cast</h2>
+        <div className="flex flex-wrap gap-4 mt-4">
+          {casts.slice(0, 10).map((member) => (
+            <div key={member.id} className="flex flex-col items-center">
+              <img
+                className="w-24 h-24 rounded-full object-cover"
+                src={apiConfig.w500image(member.profile_path)}
+                alt={member.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.target.src = "/path/to/fallback/image.jpg";
+                }}
+              />
+              <p className="text-center text-gray-700 mt-2">{member.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
