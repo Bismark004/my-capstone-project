@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import apiConfig from "../../Api/apiConfig";
 
-const MovieCard = ({ movie }) => {
-  let posterUrl = apiConfig.w500image(movie.poster_path || movie.backdrop_path);
-  let rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+const MovieCard = ({ movie, category }) => {
+  const posterUrl = apiConfig.w500image(
+    movie.poster_path || movie.backdrop_path
+  );
+  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+
+  // Determine the correct path based on the category
+  const linkTo = category === "tv" ? `/tv/${movie.id}` : `/movie/${movie.id}`;
 
   return (
-    <Link to={`/movie/${movie.id}`}>
+    <Link to={linkTo}>
       <div className="bg-claucous rounded-lg hover:bg-zeffre transition-colors duration-300 aspect-w-1 aspect-h-1">
         <div className="flex flex-col justify-between h-full p-4">
           <img

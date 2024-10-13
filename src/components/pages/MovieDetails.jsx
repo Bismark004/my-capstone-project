@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import tmdbApi from "../../Api/tmdbApi";
 import apiConfig from "../../Api/apiConfig";
 import { SwiperSlide, Swiper } from "swiper/react";
@@ -10,6 +10,7 @@ import FavouriteIcon from "../common/FavouriteIcon";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [movieDetails, setMovieDetails] = useState(null);
   const [casts, setCasts] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
@@ -26,14 +27,13 @@ const MovieDetails = () => {
   } = useMovieStore();
 
   useEffect(() => {
+    const categoryType = location.pathname.includes("/movie") ? "movie" : "tv";
+    setCategory(categoryType);
+
     const fetchData = async () => {
       try {
         setIsLoading(true);
         setError(null);
-        const categoryType = window.location.pathname.includes("/movie")
-          ? "movie"
-          : "tv";
-        setCategory(categoryType);
 
         const details = await tmdbApi.details(categoryType, id);
         setMovieDetails(details);
@@ -54,8 +54,7 @@ const MovieDetails = () => {
     };
 
     fetchData();
-  }, [id]);
-
+  }, [id, location]);
   if (isLoading) {
     return <div>Loading movie details...</div>; // Add spinner here
   }

@@ -17,6 +17,7 @@ const MovieList = ({ title, type, category }) => {
           category === "movie"
             ? await tmdbApi.getMovieList(type, { params })
             : await tmdbApi.getTvList(type, { params });
+
         console.log(`Received ${category} list:`, response);
         setMovies(response.results);
       } catch (error) {
@@ -40,10 +41,11 @@ const MovieList = ({ title, type, category }) => {
       {movies.length === 0 ? (
         <div>Loading...</div>
       ) : (
-        <Swiper spaceBetween={8} slidesPerView={"4"}>
+        <Swiper spaceBetween={8} slidesPerView={4}>
           {movies.map((item) => (
             <SwiperSlide key={item.id}>
-              <MovieCard movie={item} />
+              {/* Pass the category prop to MovieCard */}
+              <MovieCard movie={item} category={category} />
             </SwiperSlide>
           ))}
         </Swiper>
