@@ -106,7 +106,7 @@ const MovieDetails = () => {
         {/* Info Section */}
         <div className="flex-1 flex flex-col gap-6 md:mt-8">
           <h1 className="text-4xl md:text-6xl text-scarlet font-bold leading-tight">
-            {movieDetails.title}
+            {movieDetails.title || movieDetails.name}
           </h1>
 
           <p className="text-claucous mt-4 overflow-auto max-h-40 md:max-h-full">
