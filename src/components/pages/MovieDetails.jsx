@@ -83,39 +83,43 @@ const MovieDetails = () => {
   };
 
   return (
-    <div className=" mx-auto w-full max-w-screen-xl">
+    <div className="mx-auto w-full max-w-screen-xl">
       {/* Banner Section */}
       <div
-        className="relative h-80 bg-cover bg-center w-full"
-        style={{
-          backgroundImage: `url(${backdropUrl})`,
-        }}>
+        className="relative h-60 md:h-60 bg-cover bg-center w-full"
+        style={{ backgroundImage: `url(${backdropUrl})` }}>
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent" />
       </div>
 
       {/* Movie Content */}
-      <div className="relative flex flex-col md:flex-row items-start gap-6 -mt-32 max-w-[1200px] mx-auto px-8 h-auto">
-        {/* Poster */}
-        <img
-          className="flex-1 hidden md:block rounded-xl  bg-cover bg-center"
-          src={posterUrl}
-          alt={movieDetails.title || "Movie poster"}
-          loading="lazy"
-        />
+      <div className="relative flex flex-col md:flex-row items-start gap-8 -mt-32 max-w-[1200px] mx-auto px-8">
+        {/* Poster Section (Smaller Poster) */}
+        <div className="w-40 md:w-72 aspect-[2/3] rounded-xl overflow-hidden flex-shrink-0">
+          <img
+            className="object-cover w-full h-full"
+            src={posterUrl}
+            alt={movieDetails.title || "Movie poster"}
+            loading="lazy"
+          />
+        </div>
 
         {/* Info Section */}
-        <div className="flex-1 flex flex-col gap-4">
-          <h1 className="text-6xl text-ghatWhite font-bold">
+        <div className="flex-1 flex flex-col gap-6 md:mt-8">
+          <h1 className="text-4xl md:text-6xl text-scarlet font-bold leading-tight">
             {movieDetails.title}
           </h1>
-          <p className="text-customDark mt-20">{movieDetails.overview}</p>
 
+          <p className="text-claucous mt-4 overflow-auto max-h-40 md:max-h-full">
+            {movieDetails.overview}
+          </p>
+
+          {/* Rating & Release Date */}
           <div className="flex gap-4 mt-4">
-            <span className="bg-zeffre text-white px-3 py-1 rounded">
+            <span className="bg-zeffre text-white px-4 py-2 rounded shadow">
               Rating: {movieDetails.vote_average.toFixed(1)}
             </span>
-            <span className="bg-claucous text-white px-3 py-1 rounded">
+            <span className="bg-claucous text-white px-4 py-2 rounded shadow">
               Release Date:{" "}
               {movieDetails.release_date || movieDetails.first_air_date}
             </span>
@@ -126,15 +130,16 @@ const MovieDetails = () => {
             {movieDetails.genres?.map((genre) => (
               <span
                 key={genre.id}
-                className="px-2 py-1 border-2 border-scarlet rounded-full text-sm font-semibold">
+                className="px-3 py-1 border-2 border-scarlet rounded-full text-sm font-semibold">
                 {genre.name}
               </span>
             ))}
           </div>
 
-          <div className="flex gap-4">
+          {/* Action Buttons */}
+          <div className="flex gap-4 mt-6">
             <button
-              className={`flex items-center gap-2 px-4 py-2 rounded ${
+              className={`flex items-center gap-2 px-4 py-2 rounded transition-all hover:scale-105 focus:outline-none ${
                 isFavourite ? "bg-scarlet" : "bg-claucous"
               }`}
               onClick={toggleFavorite}>
@@ -143,7 +148,7 @@ const MovieDetails = () => {
             </button>
 
             <button
-              className={`flex items-center gap-2 px-4 py-2 rounded ${
+              className={`flex items-center gap-2 px-4 py-2 rounded transition-all hover:scale-105 focus:outline-none ${
                 isWatchLater ? "bg-scarlet" : "bg-claucous"
               }`}
               onClick={toggleWatchLater}>
@@ -156,9 +161,7 @@ const MovieDetails = () => {
 
       {/* Cast Section */}
       <div className="mt-12 mx-auto">
-        <h2 className="text-2xl font-semibold text-customDark text-center">
-          Cast
-        </h2>
+        <h2 className="text-xl font-bold mb-4 text-scarlet">Cast</h2>
         <div className="flex  gap-4 mt-4 overflow-x-scroll">
           {casts.slice(0, 10).map((member) => (
             <div key={member.id} className="flex flex-col items-center">
@@ -171,7 +174,7 @@ const MovieDetails = () => {
                   e.target.src = "/path/to/fallback/image.jpg";
                 }}
               />
-              <p className="text-center text-gray-300 mt-2">{member.name}</p>
+              <p className="text-center text-customDark mt-2">{member.name}</p>
             </div>
           ))}
         </div>
@@ -179,9 +182,7 @@ const MovieDetails = () => {
 
       {/* Similar Movies Section */}
       <div className="mt-12 ">
-        <h2 className="text-2xl font-semibold text-customDark text-center mb-4">
-          Similar Movies
-        </h2>
+        <h2 className="text-xl font-bold mb-4 text-scarlet">Similar Movies</h2>
         <Swiper spaceBetween={5} slidesPerView={4}>
           {similarMovies.map((similarMovie) => (
             <SwiperSlide key={similarMovie.id}>
