@@ -14,10 +14,6 @@ module.exports = {
         scarlet: "#FF331F",
         ghatWhite: "#FBFBFF",
       },
-
-      AspectRatio: {
-        "1/2": "1/2",
-      },
     },
   },
   variants: { extend: {} },
