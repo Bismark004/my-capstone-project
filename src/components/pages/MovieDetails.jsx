@@ -56,7 +56,7 @@ const MovieDetails = () => {
     fetchData();
   }, [id, location]);
   if (isLoading) {
-    return <div>Loading movie details...</div>; // Add spinner here
+    return <div>Loading movie details...</div>;
   }
 
   if (error) {
