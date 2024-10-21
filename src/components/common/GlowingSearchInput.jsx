@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 const GlowingSearchInput = () => {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("multi"); // Default category
+  const [category, setCategory] = useState("multi");
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (!query) return; // Avoid searching with an empty query
+    if (!query) return;
     navigate(`/search?query=${query}&category=${category}`);
   };
 

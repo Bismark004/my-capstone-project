@@ -11,7 +11,7 @@ const WatchLaterIcon = () => {
         style={{
           color: hover ? "yellow" : "white",
           cursor: "pointer",
-          transition: "color 0.3s ease", // Smooth transition
+          transition: "color 0.3s ease",
         }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}

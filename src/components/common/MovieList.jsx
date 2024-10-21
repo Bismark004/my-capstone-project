@@ -44,7 +44,6 @@ const MovieList = ({ title, type, category }) => {
         <Swiper spaceBetween={8} slidesPerView={4}>
           {movies.map((item) => (
             <SwiperSlide key={item.id}>
-              {/* Pass the category prop to MovieCard */}
               <MovieCard movie={item} category={category} />
             </SwiperSlide>
           ))}
